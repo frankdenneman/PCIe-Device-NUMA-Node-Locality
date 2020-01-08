@@ -36,7 +36,7 @@ Filter bdf3 { [int]$_ }
 Filter bdf4 { "vsish -e get /hardware/pci/seg/0/bus/$_/slot/0/func/0/pciConfigHeader | grep 'Numa node'"}
 Filter bdf5 { Invoke-SSHCommand -SSHSession $session -Command $bdf4 }
 Filter bdf6 { $_ | Out-String -Stream | Select-String -Pattern "Numa node"}
-Filter bdf7 { $_.ToString().Trim("Output     : {   }") }
+Filter bdf7 { $_.ToString().Trim("Output     : {Numa node:   }") }
 Filter bdf8 { Get-VM -location $esxhost| Where-Object {$_.ExtensionData.Config.Hardware.Device.Backing.Id -like $bdf0 }
             Select -ExpandProperty Name }
 Filter bdf9 { $esxcli.network.nic.list.Invoke() | where{$_.PCIDevice -match "$bdf0"} | Select -ExpandProperty Name }            
