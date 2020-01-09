@@ -8,7 +8,7 @@ The concept of GPU computing implies using GPUs and CPUs together. In many new w
 
 In both scenarios having insight into PCIe Device to processor locality is a must to provide the best performance to the application or avoid introducing menacing noisy neighbors that can influence the performance of other workloads active in the system.
 
-##PCIe Device NUMA Node Locality
+## PCIe Device NUMA Node Locality
 
 The majority of servers used in VMware virtualized environments are two-socket systems. Each socket accommodates a processor containing several CPU cores. A processor contains multiple memory controllers offering a connection to directly connected memory. An interconnect (Intel: QuickPath Interconnect (QPI) & UltraPath Interconnect (UPI), AMD: Infinity Fabric (IF)) connects the two processors and allows the cores within each processor to access the memory connected to the other processor. When accessing memory connected directly to the processor, it is called local memory access. When accessing memory connected to the other processor, it is called remote memory access. This architecture provides Non-Uniform Memory Access (NUMA) as access latency, and bandwidth differs between local memory access or remote memory access. Henceforth these systems are referred to as NUMA systems. 
 
@@ -28,7 +28,7 @@ Keeping the application processes and data-processing software components on the
 
 For VNF workloads, it is essential to avoid any latency introduced by the system. Concepts like VT-d (Virtualization Technology for Directed I/O) reduces the time spent in a system for IOs and isolate the path so that no other workload can affect its operation. Ensuring the vCPU operates within the same NUMA domain ensures that no additional penalties are introduced by traffic on the interconnect and ensures the shortest path is provided from the CPU to the PCIe device.
 
-Constraining CPU placement
+## Constraining CPU placement
 The PCIe Device NUMA Node Locality script assists in obtaining the best possible performance by indentifying the PCIe locality of GPU, NIC of FPGA PCIe devices. Typically VMs running the workloads as mentioned earlier are configured with a PCI passthrough enabled device. As a result, the script informs you which VMs are attached directly to the particular PCIe devices.  
 
 Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be constraint by associating those virtual machines with a specific NUMA node using an advanced setting.
