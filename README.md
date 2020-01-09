@@ -53,3 +53,5 @@ As the script extracts information from the VMkernel Sys Info Shell (VSI Shell) 
 To execute a vanish command via the SSH session, root access is required. It might be possible to use SUDO but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a windows that allows you to enter your root credentials securely.
 
 ![screenshot](03-Secure-Login-via-Posh-SSH.png)
+
+**Script Content**
