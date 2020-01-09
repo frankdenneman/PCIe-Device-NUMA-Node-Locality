@@ -1,6 +1,5 @@
-# PCIe-to-NUMA-Mapping
-Scriptset to enumerate PCIe Device to NUMA mapping within an VMware ESXi Host 
-More info soon
+# PCIe-to-NUMA-Node-Locality 
+The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs and (Intel) FPGAs.
 
 ## PCIe Devices Becoming the Primary Units of Data Processing
 
@@ -34,3 +33,9 @@ The PCIe Device NUMA Node Locality script assists in obtaining the best possible
 Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be constraint by associating those virtual machines with a specific NUMA node using an advanced setting.
 
 *Please note that applying this setting can interfere with the ability of the ESXi NUMA scheduler to rebalance virtual machines across NUMA nodes for fairness. Specify NUMA node affinity only after you consider the rebalancing issues.*
+
+# The Script Set
+
+The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs and (Intel) FPGAs.
+
+*Please note that these scripts only collect information and do not alter any configuration in any way possible.* 
