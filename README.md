@@ -30,7 +30,7 @@ For VNF workloads, it is essential to avoid any latency introduced by the system
 ## Constraining CPU placement
 The PCIe Device NUMA Node Locality script assists in obtaining the best possible performance by indentifying the PCIe locality of GPU, NIC of FPGA PCIe devices. Typically VMs running the workloads as mentioned earlier are configured with a PCI passthrough enabled device. As a result, the script informs you which VMs are attached directly to the particular PCIe devices.  
 
-Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be constraint by associating those virtual machines with a specific NUMA node using an advanced setting.
+Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be controlled by associating the listed virtual machines with a specific NUMA node using an advanced setting.
 
 *Please note that applying this setting can interfere with the ability of the ESXi NUMA scheduler to rebalance virtual machines across NUMA nodes for fairness. Specify NUMA node affinity only after you consider the rebalancing issues.*
 
