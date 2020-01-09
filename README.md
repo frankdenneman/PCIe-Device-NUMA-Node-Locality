@@ -1,4 +1,4 @@
-# PCIe-to-NUMA-Node-Locality 
+# Abstract
 The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs and (Intel) FPGAs.
 
 ## PCIe Devices Becoming the Primary Units of Data Processing
@@ -28,7 +28,7 @@ The interconnect provides more theoretical bandwidth than a single PCIe 3.0 devi
 For VNF workloads, it is essential to avoid any latency introduced by the system. Concepts like VT-d (Virtualization Technology for Directed I/O) reduces the time spent in a system for IOs and isolate the path so that no other workload can affect its operation. Ensuring the vCPU operates within the same NUMA domain ensures that no additional penalties are introduced by traffic on the interconnect and ensures the shortest path is provided from the CPU to the PCIe device.
 
 ## Constraining CPU placement
-The PCIe Device NUMA Node Locality script assists in obtaining the best possible performance by indentifying the PCIe locality of GPU, NIC of FPGA PCIe devices. Typically VMs running the workloads as mentioned earlier are configured with a PCI passthrough enabled device. As a result, the script informs you which VMs are attached directly to the particular PCIe devices.  
+The PCIe Device NUMA Node Locality script assists in obtaining the best possible performance by indentifying the PCIe locality of GPU, NIC of FPGA PCIe devices within VMware ESXi hosts. Typically VMs running NFV or GPGPU workloads are configured with a PCI passthrough enabled device. As a result, these VMware PowerCLI scripts inform the user which VMs are attached directly to the particular PCIe devices.  
 
 Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be controlled by associating the listed virtual machines with a specific NUMA node using an advanced setting.
 
@@ -41,11 +41,12 @@ The purpose of these scripts is to identify the PCIe Device to NUMA Node localit
 *Please note that these scripts only collect information and do not alter any configuration in any way possible.* 
 
 ## Requirements
+* VMware PowerCLI
 * Connection to VMware vCenter
 * Posh-SSH https://github.com/darkoperator/Posh-SSH
 * Root Access to ESXi hosts
 
-The script primarily interfaces with the virtually infrastructure via a connection to the VMware vCenter server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself, it assumes this is already in-place.
+The VMware PowerCLI script primarily interfaces with the virtually infrastructure via a connection to the VMware vCenter server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself, it assumes this is already in-place.
 
 As the script extracts information from the VMkernel Sys Info Shell (VSI Shell) https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-to-NUMAMapping scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command Install-Module -Name Posh-SSH (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
 
