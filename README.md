@@ -20,7 +20,7 @@ It was big news when the AMD Opteron and Intel Nehalem Processor integrated the 
 
 In essence, a PCIe device is hardwired to a particular port on a processor. And that means that we can introduce another concept to NUMA locality, which is PCIe locality.  Considering PCIe locality when scheduling low-latency or GPU compute workload can be beneficial not only to the performance of the application itself but also to the other workloads active on the system.
 
-![Screenshot](02-PCIe%20Device%20NUMA%20Node%20Locality%20Venn%20Diagram.png)
+![Screenshot](/02-PCIe-NUMA-Node-Locality%20-%20Venn%20diagram.png)
 
 For example, Machine Learning involves processing a lot of data, and this data flows within the system from the CPU and memory subsystem to the GPU to be processed. Properly written Machine Learning application routines minimize communication between the GPU and CPU once the dataset is loaded on the GPU, but getting the data onto the GPU typically turns the application into a noisy neighbor to the rest of the system. Imagine if the GPU card is connected to NUMA node 0, and the application is running on cores located in NUMA node 1. All that data has to go through the interconnect to the GPU card. 
 
