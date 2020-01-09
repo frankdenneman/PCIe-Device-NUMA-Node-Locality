@@ -2,6 +2,8 @@
 Scriptset to enumerate PCIe Device to NUMA mapping within an VMware ESXi Host 
 More info soon
 
+## PCIe Devices Becoming the Primary Units of Data Processing
+
 Due to the character of new workloads, the PCIe device is quickly moving up from "just" being a peripheral device to become the primary unit for data processing. Two great examples of this development are the rise of General Purpose GPU (GPGPU), often referred to as GPU Compute, and the virtualization of the telecommunication space.
 
 The concept of GPU computing implies using GPUs and CPUs together. In many new workloads, the processes of an application are executed on a few CPU cores, while the GPU, with its many cores, handles the computational intensive data-processing part. Another workload, or better said, a whole industry that leans heavily on the performance of PCIe devices, is the telecommunication industry. Virtual Network Functions (VNF) require platforms using SR-IOV capable NICs or SmartNICs to provide ultra-fast packet processing performance.
