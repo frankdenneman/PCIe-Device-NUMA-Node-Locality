@@ -47,6 +47,7 @@ The purpose of these scripts is to identify the PCIe Device to NUMA Node localit
 ## Requirements
 * VMware PowerCLI
 * Connection to VMware vCenter
+* [Unrestricted Script Execution Policy](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-powershell-1.0/ee176961(v=technet.10)?redirectedfrom=MSDN)
 * [Posh-SSH](https://github.com/darkoperator/Posh-SSH)
 * Root Access to ESXi hosts
 
