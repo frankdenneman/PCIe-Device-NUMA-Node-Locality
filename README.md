@@ -91,7 +91,7 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 - Step 1. Download the script by clicking the "Download" button on this page.
 - Step 2. Open PowerCLI session.
 - Step 3. [Connect to VIServer ](https://blogs.vmware.com/PowerCLI/2013/03/back-to-basics-connecting-to-vcenter-or-a-vsphere-host.html)
-- Step 4. Execute script for example, the GPU script: ./PCIE-NUMA-Locality-GPU.ps1
+- Step 4. Execute script for example, the GPU script: .\PCIE-NUMA-Locality-GPU.ps1
 - Step 5. Enter ESXi Host Name
 - Step 6. Enter GPU Vendor Name
 
@@ -100,6 +100,11 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 </p>
 
 - Step 7. Enter Root credentials to establish SSH session
+
+<p align="center">
+<img src="images/03-PCIe-NUMA-Locality-GPU-Secure-Login-via-Posh-SSH.png">  
+</p>
+
 - Step 8. Consume output
 
 <p align="center">
