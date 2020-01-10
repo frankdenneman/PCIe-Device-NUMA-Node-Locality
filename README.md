@@ -92,5 +92,5 @@ Step 5: Enter ESXi Host Name
 Step 6: Enter GPU Vendor Name
 
 <p align="center">
-<img src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/03-Secure-Login-via-Posh-SSH.png">  
+<img src="images/05-Connection-Screenshot.png">  
 </p>
