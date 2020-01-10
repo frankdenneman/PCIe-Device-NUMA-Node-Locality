@@ -60,8 +60,8 @@ To execute a vanish command via the SSH session, root access is required. It mig
 Each script consists of three stages, Host selection & logon, data collection, and data modeling. The script uses the module [Posh-SSH](http://www.lucd.info/knowledge-base/use-posh-ssh-instead-of-putty/) to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
 
 <img align="right" src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/04-FlowChart.png">
+
 ### Host Selection & Logon
-The script requires you to enter the FQDN of the ESXi Host
-Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
-Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
-Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+The script requires you to enter the FQDN of the ESXi Host and since you are already providing input via the keyboard, the script initiates the SSH session to the host, requiring you to logon with the root useraccount of the host. When using the GPU script, input of GPU vendor name is requested. This can be for example, NVIDIA, AMD, Intel or any other vendor providing supported GPU devices. This input is not case-sensitive.
+
+
