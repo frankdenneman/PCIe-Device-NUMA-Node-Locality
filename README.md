@@ -64,4 +64,8 @@ Each script consists of three stages, Host selection & logon, data collection, a
 ### Host Selection & Logon
 The script requires you to enter the FQDN of the ESXi Host and since you are already providing input via the keyboard, the script initiates the SSH session to the host, requiring you to logon with the root useraccount of the host. When using the GPU script, input of GPU vendor name is requested. This can be for example, NVIDIA, AMD, Intel or any other vendor providing supported GPU devices. This input is not case-sensitive.
 
+### Data Collection
+The script initiates an esxcli command that collects the PCIe address of the chosen PCIe device type. It stores the pci-addresses in a simple array
 
+### Data Modeling
+The NUMA node information of the PCIe device is available in the VSI Shell, however it is listed under the decimal value of the Bus ID of the PCIe address of the device. The part that follows is collection of instructions converting the full address space into a double digit decimal value. Once this address is available, it's inserted in a VSISH command and execute on the ESXi host via the already opened SSH connection. The NUMA node, plus some other information is returned by the host and this data is trimmed to get the core value and store it in a PSobject. Throughout all the steps of the data modeling phase, each output of the used [filter functions](https://www.microsoftpressstore.com/articles/article.aspx?p=2449030&seqNum=10) are stored in a PSObject. This object can be retrieved to verify if the translation process was executed correctly.
