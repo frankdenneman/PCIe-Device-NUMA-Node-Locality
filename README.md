@@ -69,3 +69,8 @@ The script initiates an esxcli command that collects the PCIe address of the cho
 
 ### Data Modeling
 The NUMA node information of the PCIe device is available in the VSI Shell, however it is listed under the decimal value of the Bus ID of the PCIe address of the device. The part that follows is collection of instructions converting the full address space into a double digit decimal value. Once this address is available, it's inserted in a VSISH command and execute on the ESXi host via the already opened SSH connection. The NUMA node, plus some other information is returned by the host and this data is trimmed to get the core value and store it in a PSobject. Throughout all the steps of the data modeling phase, each output of the used [filter functions](https://www.microsoftpressstore.com/articles/article.aspx?p=2449030&seqNum=10) are stored in a PSObject. This object can be retrieved to verify if the translation process was executed correctly. Call  `$bdfOutput` to retrieve the most recent conversion. (as the data of each GPU flows serially through the function pipeline, only the last device convertion can be retrieved by calling `$bdfOutput`
+
+The next step is to identify if any virtual machines registered on the selected host are configured with [PCIe passthrough](https://kb.vmware.com/s/article/1010789) devices corresponding with the discovered PCIe addresses. 
+
+### Output
+A selection of 
