@@ -112,5 +112,5 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 </p>
 
 # Acknowledgements
-This script set is created with the guidance of @kmruddy and @lucDekens. 
+This script set would not have been created without the guidance of @kmruddy and @lucdekens. Thanks Valentin Bondzio for verification of NUMA details and Niels Hagoort and the TM vSphere team for making their lab available to me.
 
