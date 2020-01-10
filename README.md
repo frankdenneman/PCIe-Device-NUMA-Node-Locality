@@ -40,7 +40,7 @@ Currently, the VMkernel schedulers do no provide any automatic placement based o
 
 # The Script Set
 
-The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs and (Intel) FPGAs.
+The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs, and (Intel) FPGAs.
 
 > Please note that these scripts only collect information and do not alter any configuration in any way possible.
 
@@ -50,11 +50,11 @@ The purpose of these scripts is to identify the PCIe Device to NUMA Node localit
 * [Posh-SSH](https://github.com/darkoperator/Posh-SSH)
 * Root Access to ESXi hosts
 
-The VMware PowerCLI script primarily interfaces with the virtually infrastructure via a connection to the VMware vCenter server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself, it assumes this is already in-place.
+The VMware PowerCLI script primarily interfaces with the virtual infrastructure via a connection to the VMware vCenter Server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself. It assumes this is already in-place.
 
-As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-to-NUMAMapping scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command Install-Module -Name Posh-SSH (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
+As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-NUMA-Locality scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command 'Install-Module -Name Posh-SSH' (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
 
-To execute a vanish command via the SSH session, root access is required. It might be possible to use SUDO but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a windows that allows you to enter your root credentials securely.
+Root access is required to execute a vanish command via the SSH session. It might be possible to use SUDO, but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a screen that allows you to enter your root credentials securely.
 
 <p align="center">
 <img src="images/03-PCIe-NUMA-Locality-GPU-Secure-Login-via-Posh-SSH.png">  
