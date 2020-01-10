@@ -75,10 +75,10 @@ The next step is to identify if any virtual machines registered on the selected 
 ### Output
 A selection of datapoints are generated as output by the script:
 PCIe Device | Output
-------------|-------
-GPU | PCI ID, NUMA Node, Passthrough Attached VMs
-NIC | VMNIC name, PCI ID, NUMA Node, Passthrough Attached VMs
-FPGA | PCI ID, NUMA Node, Passthrough Attached VMs
+| ------------|------- |
+| GPU | PCI ID, NUMA Node, Passthrough Attached VMs |
+| NIC | VMNIC name, PCI ID, NUMA Node, Passthrough Attached VMs |
+| FPGA | PCI ID, NUMA Node, Passthrough Attached VMs |
 
 
 
