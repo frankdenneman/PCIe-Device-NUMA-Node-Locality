@@ -27,7 +27,7 @@ In essence, a PCIe device is hardwired to a particular port on a processor. And 
 
 For example, Machine Learning involves processing a lot of data, and this data flows within the system from the CPU and memory subsystem to the GPU to be processed. Properly written Machine Learning application routines minimize communication between the GPU and CPU once the dataset is loaded on the GPU, but getting the data onto the GPU typically turns the application into a noisy neighbor to the rest of the system. Imagine if the GPU card is connected to NUMA node 0, and the application is running on cores located in NUMA node 1. All that data has to go through the interconnect to the GPU card. 
 
-The interconnect provides more theoretical bandwidth than a single PCIe 3.0 device can operate at, ~40 GB/s vs. 15 GB/s. But we have to understand that interconnect is used for all PCIe connectivity and memory transfers by the CPU scheduler. If you want to explore this topic more, I recommend reviewing Amdahl's Law - Validity of the single processor approach to achieving large scale computing capabilities - published in 1967. (Still very relevant) And the strongly related Little's Law. Keeping the application processes and data-processing software components on the same NUMA node keeps the workloads from flooding the QPI/UPI/aIF interconnect. 
+The interconnect provides more theoretical bandwidth than a single PCIe 3.0 device can operate at, ~40 GB/s vs. 15 GB/s. But we have to understand that interconnect is used for all PCIe connectivity and memory transfers by the CPU scheduler. If you want to explore this topic more, I recommend reviewing Amdahl's Law - Validity of the single processor approach to achieving large scale computing capabilities - published in 1967. (Still very relevant) And the strongly related Little's Law. Keeping the application processes and data-processing software components on the same NUMA node keeps the workloads from flooding the QPI/UPI/ AMD IF interconnect. 
 
 For VNF workloads, it is essential to avoid any latency introduced by the system. Concepts like VT-d (Virtualization Technology for Directed I/O) reduces the time spent in a system for IOs and isolate the path so that no other workload can affect its operation. Ensuring the vCPU operates within the same NUMA domain ensures that no additional penalties are introduced by traffic on the interconnect and ensures the shortest path is provided from the CPU to the PCIe device.
 
@@ -52,7 +52,7 @@ The purpose of these scripts is to identify the PCIe Device to NUMA Node localit
 
 The VMware PowerCLI script primarily interfaces with the virtual infrastructure via a connection to the VMware vCenter Server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself. It assumes this is already in-place.
 
-As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-NUMA-Locality scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command 'Install-Module -Name Posh-SSH' (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
+As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-NUMA-Locality scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command `Install-Module -Name Posh-SSH` (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
 
 Root access is required to execute a vanish command via the SSH session. It might be possible to use SUDO, but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a screen that allows you to enter your root credentials securely.
 
@@ -66,18 +66,18 @@ Each script consists of three stages, Host selection & logon, data collection, a
 <img align="right" src="images/04-PCIe-NUMA-Locality-GPU-FlowChart.png">
 
 ### Host Selection & Logon
-The script requires you to enter the FQDN of the ESXi Host and since you are already providing input via the keyboard, the script initiates the SSH session to the host, requiring you to logon with the root useraccount of the host. When using the GPU script, input of GPU vendor name is requested. This can be for example, NVIDIA, AMD, Intel or any other vendor providing supported GPU devices. This input is not case-sensitive.
+The script requires you to enter the FQDN of the ESXi Host, and since you are already providing input via the keyboard, the script initiates the SSH session to the host, requiring you to login with the root user account of the host. When using the GPU script, the input of the GPU vendor name is requested. The input can be, for example, NVIDIA, AMD, Intel, or any other vendor providing supported GPU devices. This input is not case-sensitive.
 
 ### Data Collection
-The script initiates an esxcli command that collects the PCIe address of the chosen PCIe device type. It stores the pci-addresses in a simple array
+The script initiates an esxcli command that collects the PCIe address of the chosen PCIe device type. It stores the PCIe addresses in a simple array.
 
 ### Data Modeling
-The NUMA node information of the PCIe device is available in the VSI Shell, however it is listed under the decimal value of the Bus ID of the PCIe address of the device. The part that follows is collection of instructions converting the full address space into a double digit decimal value. Once this address is available, it's inserted in a VSISH command and execute on the ESXi host via the already opened SSH connection. The NUMA node, plus some other information is returned by the host and this data is trimmed to get the core value and store it in a PSobject. Throughout all the steps of the data modeling phase, each output of the used [filter functions](https://www.microsoftpressstore.com/articles/article.aspx?p=2449030&seqNum=10) are stored in a PSObject. This object can be retrieved to verify if the translation process was executed correctly. Call  `$bdfOutput` to retrieve the most recent conversion. (as the data of each GPU flows serially through the function pipeline, only the last device convertion can be retrieved by calling `$bdfOutput`
+The NUMA node information of the PCIe device is available in the VSI Shell. However, it is listed under the decimal value of the Bus ID of the PCIe address of the device. The part that follows is a collection of instructions converting the full address space into a double-digit decimal value. Once this address is available, it's inserted in a VSISH command and execute on the ESXi host via the already opened SSH connection. The NUMA node, plus some other information, is returned by the host, and this data is trimmed to get the core value and store it in a PSobject. Throughout all the steps of the data modeling phase, each output of the used [filter functions](https://www.microsoftpressstore.com/articles/article.aspx?p=2449030&seqNum=10) is stored in a PSObject. This object can be retrieved to verify if the translation process was executed correctly. Call  `$bdfOutput` to retrieve the most recent conversion. (as the data of each GPU flows serially through the function pipeline, only the last device conversion can be retrieved by calling `$bdfOutput`. 
 
 The next step is to identify if any virtual machines registered on the selected host are configured with [PCIe passthrough](https://kb.vmware.com/s/article/1010789) devices corresponding with the discovered PCIe addresses. 
 
 ### Output
-A selection of datapoints are generated as output by the script:
+A selection of data points is generated as output by the script:
 
 | PCIe Device | Output |
 | ---|---|
@@ -85,7 +85,7 @@ A selection of datapoints are generated as output by the script:
 | NIC | VMNIC name, PCI ID, NUMA Node, Passthrough Attached VMs |
 | FPGA | PCI ID, NUMA Node, Passthrough Attached VMs |
 
-The reason why the PCI ID address is displayed, is because when you create a VM, the vCenter UI displays the (unique) PCI-ID first to identify the correct card. A FPGA and GPU do not have a VMkernel label such as VMNIC label of a Network card. No additional information about the VMs is provided, such as CPU scheduling locations or vNUMA topology as these are expensive calls to make and can change every CPU Quorum (50 ms)
+The reason why the PCI ID address is displayed is that when you create a VM, the vCenter UI displays the (unique) PCI-ID first to identify the correct card. An FPGA and GPU do not have a VMkernel label, such as the VMNIC label of a Network card. No additional information about the VMs is provided, such as CPU scheduling locations or vNUMA topology, as these are expensive calls to make and can change every CPU Quorum (50 ms).
 
 # Using the Script Set
 - Step 1. Download the script by clicking the "Download" button on this page.
@@ -112,5 +112,5 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 </p>
 
 # Acknowledgements
-This script set would not have been created without the guidance of @kmruddy and @lucdekens. Thanks Valentin Bondzio for verification of NUMA details and Niels Hagoort and the TM vSphere team for making their lab available to me.
+This script set would not have been created without the guidance of @kmruddy and @lucdekens. Thanks, Valentin Bondzio, for verification of NUMA details and Niels Hagoort and the TM vSphere team for making their lab available to me.
 
