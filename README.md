@@ -57,4 +57,4 @@ To execute a vanish command via the SSH session, root access is required. It mig
 **Script Content**
 Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
 
-![Screenshot](images/flowChart.png)
+![Screenshot](04-FlowChart.png)
