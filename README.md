@@ -81,5 +81,5 @@ A selection of datapoints are generated as output by the script:
 | NIC | VMNIC name, PCI ID, NUMA Node, Passthrough Attached VMs |
 | FPGA | PCI ID, NUMA Node, Passthrough Attached VMs |
 
-
+The reason why the PCI ID address is displayed, is because when you create a VM, the vCenter UI displays the (unique) PCI-ID first to identify the correct card. A FPGA and GPU do not have a VMkernel label such as VMNIC label of a Network card. No additional information about the VMs is provided, such as CPU scheduling locations or vNUMA topology as these are expensive calls to make and can change every CPU Quorum (50 ms)
 
