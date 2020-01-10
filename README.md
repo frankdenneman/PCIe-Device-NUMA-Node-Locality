@@ -83,3 +83,14 @@ A selection of datapoints are generated as output by the script:
 
 The reason why the PCI ID address is displayed, is because when you create a VM, the vCenter UI displays the (unique) PCI-ID first to identify the correct card. A FPGA and GPU do not have a VMkernel label such as VMNIC label of a Network card. No additional information about the VMs is provided, such as CPU scheduling locations or vNUMA topology as these are expensive calls to make and can change every CPU Quorum (50 ms)
 
+# Using the Scrip Set
+Step 1: Download the script by clicking the "Download" button on this page.
+Step 2: Open PowerCLI session
+Step 3: [Connect to VIServer ](https://blogs.vmware.com/PowerCLI/2013/03/back-to-basics-connecting-to-vcenter-or-a-vsphere-host.html)
+Step 4: Execute script for example, the GPU script: ./PCIE-NUMA-Locality-GPU.ps1
+Step 5: Enter ESXi Host Name
+Step 6: Enter GPU Vendor Name
+
+<p align="center">
+<img src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/03-Secure-Login-via-Posh-SSH.png">  
+</p>
