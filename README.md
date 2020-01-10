@@ -61,6 +61,10 @@ Each script consists of three stages, Host selection & logon, data collection, a
 
 ### Host Selection & Logon
 The script requires you to enter the FQDN of the ESXi Host
+Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+
 
 <img align="right" src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/04-FlowChart.png">
 
