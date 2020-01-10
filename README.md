@@ -92,7 +92,7 @@ The reason why the PCI ID address is displayed is that when you create a VM, the
 
 # Using the Script Set
 - Step 1. Download the script by clicking the "Download" button on this page.
-- Step 2. Unlock scripts (Properties .ps1 file, General tab, select Unlock.
+- Step 2. Unlock scripts (Properties .ps1 file, General tab, select Unlock.)
 
 <p align="center">
 <img src="images/07-PCIe-NUMA-Locality-Unblock.png">  
