@@ -90,9 +90,17 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 - Step 4. Execute script for example, the GPU script: ./PCIE-NUMA-Locality-GPU.ps1
 - Step 5. Enter ESXi Host Name
 - Step 6. Enter GPU Vendor Name
-- Step 7. Enter Root credentials to establish SSH session
-- Step 8. Marvel at the output
 
 <p align="center">
 <img src="images/05-Connection-Screenshot.png">  
 </p>
+
+- Step 7. Enter Root credentials to establish SSH session
+- Step 8. Consume output
+
+<p align="center">
+<img src="images/06-PCIe-NUMA-Locality-GPU-Output.png">  
+</p>
+
+
+
