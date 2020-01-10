@@ -53,12 +53,12 @@ As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell]
 To execute a vanish command via the SSH session, root access is required. It might be possible to use SUDO but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a windows that allows you to enter your root credentials securely.
 
 <p align="center">
-![screenshot](03-Secure-Login-via-Posh-SSH.png)
+<img src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/03-Secure-Login-via-Posh-SSH.png">  
 </p>
 
 ## Script Content
 Each script consists of three stages, Host selection & logon, data collection, and data modeling. The script uses the module [Posh-SSH](http://www.lucd.info/knowledge-base/use-posh-ssh-instead-of-putty/) to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
 
 
-<img align-"right" src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/04-FlowChart.png">
+<img align="right" src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/04-FlowChart.png">
 
