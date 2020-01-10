@@ -111,5 +111,6 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 <img src="images/06-PCIe-NUMA-Locality-GPU-Output.png">  
 </p>
 
-
+# Acknowledgements
+This script set is created with the guidance of @kmruddy and @lucDekens. 
 
