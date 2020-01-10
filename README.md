@@ -32,29 +32,31 @@ The PCIe Device NUMA Node Locality script assists in obtaining the best possible
 
 Currently, the VMkernel schedulers do no provide any automatic placement based on PCIe locality. CPU placement can be controlled by associating the listed virtual machines with a specific NUMA node using an advanced setting.
 
-*Please note that applying this setting can interfere with the ability of the ESXi NUMA scheduler to rebalance virtual machines across NUMA nodes for fairness. Specify NUMA node affinity only after you consider the rebalancing issues.*
+> Please note that applying this setting can interfere with the ability of the ESXi NUMA scheduler to rebalance virtual machines across NUMA nodes for fairness. Specify NUMA node affinity only after you consider the rebalancing issues.
 
 # The Script Set
 
 The purpose of these scripts is to identify the PCIe Device to NUMA Node locality within a VMware ESXi Host. The script set contains a script for the most popular PCIe Device types for Datacenters that can be assigned as a passthrough device. The current script set contains scripts for GPUs, NICs and (Intel) FPGAs.
 
-*Please note that these scripts only collect information and do not alter any configuration in any way possible.* 
+> Please note that these scripts only collect information and do not alter any configuration in any way possible.
 
 ## Requirements
 * VMware PowerCLI
 * Connection to VMware vCenter
-* Posh-SSH https://github.com/darkoperator/Posh-SSH
+* [Posh-SSH](https://github.com/darkoperator/Posh-SSH)
 * Root Access to ESXi hosts
 
 The VMware PowerCLI script primarily interfaces with the virtually infrastructure via a connection to the VMware vCenter server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself, it assumes this is already in-place.
 
-As the script extracts information from the VMkernel Sys Info Shell (VSI Shell) https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-to-NUMAMapping scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command Install-Module -Name Posh-SSH (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
+As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-to-NUMAMapping scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command Install-Module -Name Posh-SSH (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
 
 To execute a vanish command via the SSH session, root access is required. It might be possible to use SUDO but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a windows that allows you to enter your root credentials securely.
 
 ![screenshot](03-Secure-Login-via-Posh-SSH.png)
 
 ## Script Content
-Each script consists of three stages, Host selection, and logon, data collection, and data modeling. The script uses the module Posh-SSH to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+Each script consists of three stages, Host selection & logon, data collection, and data modeling. The script uses the module [Posh-SSH](http://www.lucd.info/knowledge-base/use-posh-ssh-instead-of-putty/) to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
+
+
 
 ![Screenshot](04-FlowChart.png)
