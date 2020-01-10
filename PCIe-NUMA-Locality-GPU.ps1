@@ -6,24 +6,25 @@
 #Install-Module -Name Posh-SSH
 
 $esxhost = Read-Host "Enter ESXi Host Name"
-
-#Close previous Posh-SSH sessions
-$OpenSessions = Get-SSHSession
-Foreach ($sid in $OpenSessions.SessionId) {Remove-SSHSession -Index "$_"}
+$GPUVendor = Read-Host "Enter GPU Vendor Name...For example: NVIDIA"
 
 #Clear previous results of executed PCIE-NUMA Mapping script
 Clear-Variable b, bdf*, tempbdfObj, session -ErrorAction SilentlyContinue
 
+
 #Connect to Host via SSH - This will trigger a login screen
+$OpenSessions = Get-SSHSession
+Foreach ($sid in $OpenSessions.SessionId) {Remove-SSHSession -Index "$_"}
 $session = New-SSHSession -ComputerName $esxhost -Credential $cred –AcceptKey
 
 
 #Discovering data phase
-#Retrieving Bus/Device/Function (BDF) address of NIC Devices
+#Retrieving Bus/Device/Function (BDF) address of GPU Devices
 ForEach-Object -Process {
     $esxcli = Get-EsxCli -VMHost $esxhost -v2
-    $bdfnic = $esxcli.network.nic.list.Invoke() |
-        Select -ExpandProperty PCIDevice
+    $bdf = $esxcli.graphics.device.list.Invoke() |
+        where{$_.VendorName -match "$GPUVendor"} |
+        Select -ExpandProperty Address
         }        
    
 #Collecting data phase
@@ -31,7 +32,7 @@ ForEach-Object -Process {
 #The decimal value is required to lookup the device in the VSI shell of the ESXi host
 #A VSISH command is executed to retrieve the NUMA node information of the PCIe Device
 $bdfOutput = @()
-foreach ($b in $bdfnic) {  
+foreach ($b in $bdf) {  
 
 Filter bdf0 { $_ }
 Filter bdf1 { $_[5,6] -join '' }
@@ -43,7 +44,6 @@ Filter bdf6 { $_ | Out-String -Stream | Select-String -Pattern "Numa node"}
 Filter bdf7 { $_.ToString().Trim("Output     : {Numa node:   }") }
 Filter bdf8 { Get-VM -location $esxhost| Where-Object {$_.ExtensionData.Config.Hardware.Device.Backing.Id -like $bdf0 }
             Select -ExpandProperty Name }
-Filter bdf9 { $esxcli.network.nic.list.Invoke() | where{$_.PCIDevice -match "$bdf0"} | Select -ExpandProperty Name }            
 
 #Molding collected data into appropriate output structure
 #Data retrieved during the collecting data phase is stored in a PS Object
@@ -85,16 +85,16 @@ $tempbdfObj = New-Object -TypeName PSObject
     # BDF8 Object creation - Discovering if VMs are configured with PCIe cards as PCI passthrough device
     $bdf8 = $bdf0 | bdf8
     $tempbdfObj | Add-Member -MemberType NoteProperty -Name "PassThrough Attached VMs" -Value $bdf8
-    
-    # BDF9 Object creation - Calling VMNIC Name
-    $bdf9 = $b | bdf9
-    $tempbdfObj | Add-Member -MemberType NoteProperty -Name "NIC Name" -Value $bdf9
-    
-    $bdfOutput += $tempbdfObj }
-    
+
+       
+    $bdfOutput += $tempbdfObj
+ } 
  #Writing output - Isolating Host Name, PCI-ID of devices, connected to NUMA Node, and which VMs are configured with that PCIe device 
  Write-Host ""
  $esxhost
- $bdfOutput | select-object "NIC Name" , "PCI-ID", "NUMA Node", "PassThrough Attached VMs"
+ $bdfOutput | select-object "PCI-ID", "NUMA Node", "PassThrough Attached VMs"
 
-Foreach ($sid in $OpenSessions.SessionId) {Remove-SSHSession -Index "$_"}
+$OpenSessions = Get-SSHSession
+Foreach ($sid in $OpenSessions.SessionId) {Remove-SSHSession -Index "$_"
+echo "Closing SSH session" 
+}
