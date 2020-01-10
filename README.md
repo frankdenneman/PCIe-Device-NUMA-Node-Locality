@@ -73,4 +73,12 @@ The NUMA node information of the PCIe device is available in the VSI Shell, howe
 The next step is to identify if any virtual machines registered on the selected host are configured with [PCIe passthrough](https://kb.vmware.com/s/article/1010789) devices corresponding with the discovered PCIe addresses. 
 
 ### Output
-A selection of 
+A selection of datapoints are generated as output by the script:
+PCIe Device | Output
+------------|-------
+GPU | PCI ID, NUMA Node, Passthrough Attached VMs
+NIC | VMNIC name, PCI ID, NUMA Node, Passthrough Attached VMs
+FPGA | PCI ID, NUMA Node, Passthrough Attached VMs
+
+
+
