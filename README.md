@@ -15,11 +15,15 @@ The majority of servers used in VMware virtualized environments are two CPU sock
 
 It was big news when the AMD Opteron and Intel Nehalem Processor integrated the memory controller within the processor. But what about PCIe devices in such a system?  Since the Sandy Bridge Architecture (2009), Intel reorganized the functions critical to the core and grouped them in the Uncore, which is a "construct" that is integrated into the processor as well. And it is this Uncore that handles the PCIe bus functions. It provides access to NVMe devices, GPUs, and NICs. Below is a schematic overview of a 28 core Intel Sky lake processor showing the PCIe ports and their own PCIe root stack.
 
-![Screenshot](01-Skylake-Schema.png)
+<p align="center">
+<img src="images/01-PCIe-NUMA-Locality-GPU-Skylake-Schema.png">  
+</p>
 
 In essence, a PCIe device is hardwired to a particular port on a processor. And that means that we can introduce another concept to NUMA locality, which is PCIe locality.  Considering PCIe locality when scheduling low-latency or GPU compute workload can be beneficial not only to the performance of the application itself but also to the other workloads active on the system.
 
-![Screenshot](02-PCIe-NUMA-Node-Locality%20-%20Venn%20diagram.png)
+<p align="center">
+<img src="images/02-PCIe-NUMA-Locality-GPU-Venn-Diagram.png">  
+</p>
 
 For example, Machine Learning involves processing a lot of data, and this data flows within the system from the CPU and memory subsystem to the GPU to be processed. Properly written Machine Learning application routines minimize communication between the GPU and CPU once the dataset is loaded on the GPU, but getting the data onto the GPU typically turns the application into a noisy neighbor to the rest of the system. Imagine if the GPU card is connected to NUMA node 0, and the application is running on cores located in NUMA node 1. All that data has to go through the interconnect to the GPU card. 
 
@@ -53,13 +57,13 @@ As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell]
 To execute a vanish command via the SSH session, root access is required. It might be possible to use SUDO but this has functionality has not been included in the script (yet). The script uses Posh-SSH keyboard-interactive authentication method and presents a windows that allows you to enter your root credentials securely.
 
 <p align="center">
-<img src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/03-Secure-Login-via-Posh-SSH.png">  
+<img src="images/03-PCIe-NUMA-Locality-GPU-Secure-Login-via-Posh-SSH.png">  
 </p>
 
 ## Script Content
 Each script consists of three stages, Host selection & logon, data collection, and data modeling. The script uses the module [Posh-SSH](http://www.lucd.info/knowledge-base/use-posh-ssh-instead-of-putty/) to create an SSH connection and runs a vsish command directly on the node itself. Due to this behavior, the script creates an output per server and cannot invoke at the cluster level. 
 
-<img align="right" src="https://github.com/frankdenneman/PCIe-Device-NUMA-Node-Locality/blob/master/04-FlowChart.png">
+<img align="right" src="images/04-PCIe-NUMA-Locality-GPU-FlowChart.png">
 
 ### Host Selection & Logon
 The script requires you to enter the FQDN of the ESXi Host and since you are already providing input via the keyboard, the script initiates the SSH session to the host, requiring you to logon with the root useraccount of the host. When using the GPU script, input of GPU vendor name is requested. This can be for example, NVIDIA, AMD, Intel or any other vendor providing supported GPU devices. This input is not case-sensitive.
@@ -92,7 +96,7 @@ The reason why the PCI ID address is displayed, is because when you create a VM,
 - Step 6. Enter GPU Vendor Name
 
 <p align="center">
-<img src="images/05-Connection-Screenshot.png">  
+<img src="images/05-PCIe-NUMA-Locality-GPU-Connection.png">  
 </p>
 
 - Step 7. Enter Root credentials to establish SSH session
