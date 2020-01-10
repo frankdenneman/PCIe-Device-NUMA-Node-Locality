@@ -51,6 +51,8 @@ The purpose of these scripts is to identify the PCIe Device to NUMA Node localit
 * [Posh-SSH](https://github.com/darkoperator/Posh-SSH)
 * Root Access to ESXi hosts
 
+> Please note that Posh-SSH only works on Windows version of PowerShell.
+
 The VMware PowerCLI script primarily interfaces with the virtual infrastructure via a connection to the VMware vCenter Server. A connection (Connect-VIServer) with the proper level of certificates must be in place before executing these scripts. The script does not initiate any connect session itself. It assumes this is already in-place.
 
 As the script extracts information from the VMkernel Sys Info Shell ([VSI Shell](https://www.virtuallyghetto.com/2010/08/what-is-vmware-vsish.html))  the script uses Posh-SSH to log into ESXi host of choice and extracts the data from the VSI Shell for further processing. The Posh-SSH module needs to be installed before running the PCIe-NUMA-Locality scripts, the script does not install Posh-SSH itself. This module can be installed by running the following command `Install-Module -Name Posh-SSH` (Admin rights required). More information can be found at https://github.com/darkoperator/Posh-SSH
@@ -90,6 +92,13 @@ The reason why the PCI ID address is displayed is that when you create a VM, the
 
 # Using the Script Set
 - Step 1. Download the script by clicking the "Download" button on this page.
+- Step 2. Unlock scripts (Properties .ps1 file, General tab, select Unlock.
+
+<p align="center">
+<img src="images/07-PCIe-NUMA-Locality-Unblock.png">  
+</p>
+
+
 - Step 2. Open PowerCLI session.
 - Step 3. [Connect to VIServer ](https://blogs.vmware.com/PowerCLI/2013/03/back-to-basics-connecting-to-vcenter-or-a-vsphere-host.html)
 - Step 4. Execute script for example, the GPU script: .\PCIE-NUMA-Locality-GPU.ps1
