@@ -96,5 +96,5 @@ $tempbdfObj = New-Object -TypeName PSObject
 
 $OpenSessions = Get-SSHSession
 Foreach ($sid in $OpenSessions.SessionId) {Remove-SSHSession -Index "$_"
-echo "Closing SSH session" 
+Echo "Closing SSH Session"
 }
